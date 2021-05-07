@@ -1,0 +1,53 @@
+{% extends 'layout3.html' %} {% block title %} validasi_product2 {% endblock %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="">
+      {% block body %}
+      <div class="container">
+        <div class="starter-template">
+          <h1>Data Validasi Product</h1>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>id</td>
+                <td>Name</td>
+                <td>Date</td>
+                <td>Status</td>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for item in validasi %}
+
+              <tr>
+                <td>{{item.id}}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.status }}</td>
+                <td>
+                  <a href="#!" data-toggle="modal" data-target="#modalEdit{{ item.id }}"></a>
+
+                  <a href="/hapus-validasi_product2/{{ item.id }}" onclick="return confirm('Yakin ingin hapus?')"></a>
+                </td>
+                <!-- Modal -->
+
+                {% else %}
+              </tr>
+
+              <tr>
+                <td colspan="3">Unbelievable. No entries here so far</td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
