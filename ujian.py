@@ -7,6 +7,7 @@ import time
 from flask import Markup
 from flask import Flask
 
+
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -20,6 +21,10 @@ mysql = MySQL(app)
 @app.route('/')
 def home():
     return render_template("home.html")
+
+@app.route('/home2')
+def home2():
+    return render_template("home2.html")
 
 # end home
 
@@ -113,6 +118,39 @@ def register():
                     return redirect(url_for('home'))
 
 # end register
+
+# register user
+
+@app.route('/register2', methods=["GET", "POST"])
+def register2():
+    if request.method == 'GET':
+        return render_template("register2.html")
+    else:
+         if request.form['email'] == '':
+            flash('Harap Data diisi')
+            return render_template("register2.html")
+         else:
+             if request.form['name'] == '':
+                flash('Harap Data diisi')
+                return render_template("register2.html")
+             else:
+                if request.form['password'] == '':
+                    flash('Harap Data diisi')
+                    return render_template("register2.html")
+                else:
+                    name = request.form['name']
+                    email = request.form['email']
+                    password = request.form['password'].encode('utf-8')
+                    password = bcrypt.hashpw(password, bcrypt.gensalt())
+                    cur = mysql.connection.cursor()
+                    cur.execute("INSERT INTO user_managemen (name, email, password) VALUES (%s,%s,%s)",
+                                (name, email, password))
+                    mysql.connection.commit()
+                    session['name'] = request.form['name']
+                    session['email'] = request.form['email']
+                    return redirect(url_for('home2'))
+
+# end register user
 
 # Logout
 
