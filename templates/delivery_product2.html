@@ -1,0 +1,57 @@
+{% extends 'layout3.html' %} {% block title %} Home {% endblock %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="">
+      {% block body %}
+      <div class="container">
+        <div class="starter-template">
+          <h1>Data Delivery Product</h1>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>id</td>
+                <td>Nama</td>
+                <td>Harga</td>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for item in delivery %}
+
+              <tr>
+                <td>{{item.id}}</td>
+
+                <td>{{ item.name }}</td>
+                <td>{{ item.date }}</td>
+                <td>
+                  <a href="#!" data-toggle="modal" data-target="#modalEdit{{ item.id }}"></a>
+
+                  <a href="/hapus-delivery_product/{{ item.id }}" onclick="return confirm('Yakin ingin hapus?')"></a>
+                </td>
+                <!-- Modal EDIT -->
+
+                {% else %}
+              </tr>
+
+              <tr>
+                <td colspan="3">Unbelievable. No entries here so far</td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal -->
+
+      <!-- /.container -->
+
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
